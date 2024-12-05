@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Lottie from "react-lottie-player";
 import Calculatoricon from "./lottie/Calculatoricon.json";
 import Calculator from "./calculator/page";
-// فرض کنید این کامپوننت رو دارید
 import AgeCalculator from "./AgeCalculator/page";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -38,6 +37,7 @@ export default function Example(props: Props) {
     setMobileOpen((prevState) => !prevState);
   };
 
+  // click navbar
   const handleNavItemClick = (item: string) => {
     if (item === "ماشین حساب") {
       setSelectedComponent("calculator");
@@ -48,6 +48,7 @@ export default function Example(props: Props) {
     }
   };
 
+  //dark mode
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
   };
@@ -130,7 +131,6 @@ export default function Example(props: Props) {
           top: "110px",
           left: 18,
           padding: "8px",
-          // marginTop: "16px",
         }}
       >
         <button

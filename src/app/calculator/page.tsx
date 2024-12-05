@@ -314,10 +314,23 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     setHistory(newHistory);
   };
 
+  // const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === "Enter" || e.key === "=") {
+  //     handleEvaluate();
+  //     e.preventDefault();
+  //   }
+  // };
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === "=") {
       handleEvaluate();
       e.preventDefault();
+    } else if (e.key === "Backspace") {
+      handleDelete(); // متد حذف کاراکتری
+      e.preventDefault(); // جلوگیری از عملکرد پیش‌فرض
+    } else if (e.key === "Delete") {
+      handleClear(); // متد حذف کل
+      e.preventDefault(); // جلوگیری از عملکرد پیش‌فرض
     }
   };
 
