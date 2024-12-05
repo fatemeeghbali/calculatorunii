@@ -1,20 +1,62 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { GrHistory } from "react-icons/gr";
 import { MdDelete, MdFileCopy } from "react-icons/md";
-// import moment from "moment-jalaali";
-
 import { toast } from "react-toastify";
 interface Operator {
   precedence: number;
   associativity: "L" | "R";
 }
 
-const Calculator: React.FC = () => {
+interface CalculatorProps {
+  darkMode: boolean;
+}
+const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
   const [input, setInput] = useState<string>("");
   const [history, setHistory] = useState<string[]>([]);
   const [inverse, setInverse] = useState<boolean>(false);
   const [showHistory, setShowHistory] = useState<boolean>(false);
-  // const [language, setLanguage] = useState<"fa" | "en">("fa");
+  const [showAbout, setShowAbout] = useState<boolean>(false);
+  const [showAboutText, setShowAboutText] = useState<boolean>(false);
+
+  const historyRef = useRef<HTMLDivElement | null>(null);
+  const aboutRef = useRef<HTMLDivElement | null>(null);
+  const aboutRefText = useRef<HTMLDivElement | null>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      historyRef.current &&
+      !historyRef.current.contains(event.target as Node) &&
+      showHistory
+    ) {
+      setShowHistory(false);
+    }
+    if (
+      aboutRef.current &&
+      !aboutRef.current.contains(event.target as Node) &&
+      showAbout
+    ) {
+      setShowAbout(false);
+    }
+    if (
+      aboutRefText.current &&
+      !aboutRefText.current.contains(event.target as Node) &&
+      showAboutText
+    ) {
+      setShowAboutText(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [showHistory, showAbout, showAboutText]);
+
+  const toggleAbout = () => {
+    setShowAboutText(!showAboutText);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -99,7 +141,7 @@ const Calculator: React.FC = () => {
     const processedInfix = replaceE(replacePi(processAbsoluteValue(infix)));
     const tokens = processedInfix.match(
       // /(\d+(\.\d+)?|[-+*/^()!|πe]|sin|cos|tan|sinh|cosh|tanh|log|√|∛|ln|%|mod|Rnd|³|EE|\^(-1))/g
-      /(\d+(\.\d+)?|[-+*/^()!|πe]|sin|cos|tan|sinh|cosh|tanh|acos|asin|atan|sin⁻¹|cos⁻¹|tan⁻¹|asinh|acosh|atanh|log|√|∛|ln|%|mod|Rnd|³|EE|\^(-1))/g
+      /(\d+(\.\d+)?|[-+*/^()!|πe]|sin|cos|tan|sinh|cosh|tanh|acos|asin|atan|sin⁻¹|cos⁻¹|tan⁻¹|asinh|acosh|atanh|log|√|∛|ln|%|mod|Rnd|³|²|EE|\^(-1))/g
     );
 
     if (tokens === null) return output;
@@ -135,99 +177,11 @@ const Calculator: React.FC = () => {
 
     while (stack.length) {
       output.push(stack.pop()!);
+      console.log(output);
     }
 
     return output;
   };
-
-  // مثلثاتیش با رادیان حساب میشه تو این کد
-  // const evaluatePostfix = (postfix: string[]): number => {
-  //   const stack: number[] = [];
-  //   const applyOperator = (op: string) => {
-  //     const b = stack.pop()!;
-  //     const a = stack.pop()!;
-  //     switch (op) {
-  //       case "+":
-  //         return a + b;
-  //       case "-":
-  //         return a - b;
-  //       case "*":
-  //         return a * b;
-  //       case "/":
-  //         return a / b;
-  //       case "^":
-  //         return Math.pow(a, b);
-  //       case "mod":
-  //         return a % b;
-  //       default:
-  //         return NaN;
-  //     }
-  //   };
-
-  //   postfix.forEach((token) => {
-  //     if (!isNaN(parseFloat(token))) {
-  //       stack.push(parseFloat(token));
-  //     } else if (token in operators) {
-  //       stack.push(applyOperator(token));
-  //     } else if (token === "sin") {
-  //       stack.push(Math.sin(stack.pop()!));
-  //     } else if (token === "cos") {
-  //       stack.push(Math.cos(stack.pop()!));
-  //     } else if (token === "tan") {
-  //       stack.push(Math.tan(stack.pop()!));
-  //     } else if (token === "sinh") {
-  //       stack.push(Math.sinh(stack.pop()!));
-  //     } else if (token === "cosh") {
-  //       stack.push(Math.cosh(stack.pop()!));
-  //     } else if (token === "tanh") {
-  //       stack.push(Math.tanh(stack.pop()!));
-  //     } else if (token === "log") {
-  //       stack.push(Math.log10(stack.pop()!));
-  //     } else if (token === "√") {
-  //       stack.push(Math.sqrt(stack.pop()!));
-  //     } else if (token === "∛") {
-  //       stack.push(Math.cbrt(stack.pop()!));
-  //     } else if (token === "ln") {
-  //       stack.push(Math.log(stack.pop()!));
-  //     } else if (token === "Rnd") {
-  //       stack.push(Math.random());
-  //     } else if (token === "!") {
-  //       const n = stack.pop()!;
-  //       stack.push(factorial(n));
-  //     } else if (token === "%") {
-  //       const percentage = stack.pop()!;
-  //       const base = stack.pop()!;
-  //       stack.push(base * (percentage / 100));
-  //     } else if (token === "acos") {
-  //       stack.push(Math.acos(stack.pop()!));
-  //     } else if (token === "asin") {
-  //       stack.push(Math.asin(stack.pop()!));
-  //     } else if (token === "atan") {
-  //       stack.push(Math.atan(stack.pop()!));
-  //     } else if (token === "asinh") {
-  //       stack.push(Math.asinh(stack.pop()!));
-  //     } else if (token === "acosh") {
-  //       stack.push(Math.acosh(stack.pop()!));
-  //     } else if (token === "atanh") {
-  //       stack.push(Math.atanh(stack.pop()!));
-  //     } else if (token === "²") {
-  //       const a = stack.pop()!;
-  //       stack.push(a * a);
-  //     } else if (token === "³") {
-  //       const a = stack.pop()!;
-  //       stack.push(a * a * a);
-  //     } else if (token === "^(-1)") {
-  //       const a = stack.pop()!;
-  //       stack.push(1 / a);
-  //     } else if (token === "EE") {
-  //       const exp = stack.pop()!;
-  //       const mantissa = stack.pop()!;
-  //       stack.push(mantissa * Math.pow(10, exp));
-  //     }
-  //   });
-
-  //   return stack[0];
-  // };
 
   const evaluatePostfix = (postfix: string[]): number => {
     const stack: number[] = [];
@@ -289,7 +243,6 @@ const Calculator: React.FC = () => {
       } else if (token === "acosh") {
         stack.push(Math.acosh(stack.pop()!));
       } else if (token === "atanh") {
-        // stack.push(Math.atan(1) * 180) / Math.PI;
         stack.push(Math.atanh(stack.pop()!));
       } else if (token === "log") {
         stack.push(Math.log10(stack.pop()!));
@@ -361,11 +314,13 @@ const Calculator: React.FC = () => {
     setHistory(newHistory);
   };
 
-  const handleKeyPress = (e: KeyboardEvent) => {
-    if (e.key === "Enter") {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === "=") {
       handleEvaluate();
+      e.preventDefault();
     }
   };
+
   const handleDeleteAll = () => {
     setHistory([]);
   };
@@ -373,30 +328,24 @@ const Calculator: React.FC = () => {
     setInverse((prev) => !prev);
   };
 
-  const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(input);
-    toast("کپی شد", {
-      type: "success",
-      position: "bottom-left",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        toast.success("متن با موفقیت کپی شد!");
+      })
+      .catch((err) => {
+        toast.error("خطایی در کپی کردن متن رخ داد.");
+      });
   };
 
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyPress);
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, []);
-
   return (
-    <div className="bg-[#FAF6FD] w-full text-black p-4 rounded-lg shadow-lg max-w-fit mx-auto max-h-fit">
+    // <div className="bg-[#FAF6FD] w-full text-black p-4 rounded-lg shadow-lg max-w-fit  max-h-fit">
+    <div
+      className={`w-full p-4 rounded-lg shadow-lg max-w-fit  max-h-fit ${
+        darkMode ? "bg-[#393939] text-white" : "bg-[#FAF6FD] text-black"
+      }`}
+    >
       <div className="flex items-center bg-[#FAF6FD] text-black  p-2 rounded-md mb-10">
         {/* <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtHlVCKEZjSlFXi2l1G-VXHFGyKkoUnek3Uw&s" // لینک تصویر فانتزی روباه را اینجا قرار دهید
@@ -408,6 +357,7 @@ const Calculator: React.FC = () => {
           type="text"
           value={input}
           onChange={handleChange}
+          onKeyDown={handleKeyPress}
           placeholder="0"
           className="flex-grow bg-transparent text-black  placeholder-black focus:outline-none text-2xl"
         />
@@ -421,13 +371,48 @@ const Calculator: React.FC = () => {
           </button>
 
           <button
-            onClick={handleCopyToClipboard}
             className="text-black text-2xl ml-4"
+            onClick={() => setShowAbout(!showAbout)}
           >
-            <MdFileCopy />
+            <BsThreeDotsVertical />
           </button>
+          {showAbout && (
+            <div
+              ref={aboutRef}
+              className="absolute right-0 mt-2 bg-white text-black shadow-lg w-60 h-10 rounded-md p-2"
+              onClick={toggleAbout}
+            >
+              <h2 className="mb-4 text-lg bg-[#d0c8d6] rounded-lg flex justify-center items-center">
+                درباره ما
+              </h2>
+            </div>
+          )}
+
+          {showAboutText && (
+            <div
+              ref={aboutRefText}
+              className="absolute right-2 mt-2 bg-white text-black shadow-lg w-80 rounded-md p-4"
+            >
+              <h2 className="text-lg font-bold mb-2 text-center bg-fuchsia-200 rounded-md">
+                درباره ما
+              </h2>
+              <p className="text-right">
+                قابلیت های پیشرفته ای دارند که محاسبات پیچیده مهندسی را تسهیل می
+                کنند. ویژگی های اصلی ماشین حساب مهندسی شامل محاسبات علمی، مهندسی
+                و تحلیلی پیشرفته است. این ماشین ها می توانند عملیات مهندسی همچون
+                محاسبه زاویه، محاسبه بردارها، محاسبات آماری، تبدیل واحدها و غیره
+                را انجام دهند. ماشین حساب های مهندسی به مهندسان اجازه می دهند تا
+                با سرعت و دقت بالا محاسبات پیچیده را انجام دهند که این امر در
+                پروژه های مهندسی و تحقیقاتی بسیار مفید است. امروزه اکثر مهندسان
+                و دانشجویان مهندسی از این ابزار قدرتمند استفاده می کنند
+              </p>
+            </div>
+          )}
           {showHistory && (
-            <div className="absolute right-0 mt-2 bg-white text-black shadow-lg w-80 h-[30rem] rounded-md p-2">
+            <div
+              ref={historyRef}
+              className="absolute right-0 mt-2 bg-white text-black shadow-lg w-80 h-[30rem] rounded-md p-2"
+            >
               <h2 className="mb-4 text-lg bg-[#d0c8d6] rounded-lg flex justify-center items-center">
                 تاریخچه
               </h2>
@@ -440,11 +425,18 @@ const Calculator: React.FC = () => {
                     >
                       {item}
                     </span>
+
                     <button
                       className="ml-2 text-purple-950"
                       onClick={() => handleDeleteItem(index)}
                     >
                       <MdDelete />
+                    </button>
+                    <button
+                      className="ml-2 text-purple-950"
+                      onClick={() => handleCopyToClipboard(item)}
+                    >
+                      <MdFileCopy />
                     </button>
                   </li>
                 ))}

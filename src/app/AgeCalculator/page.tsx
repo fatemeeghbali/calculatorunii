@@ -3,8 +3,10 @@ import DatePicker from "react-datepicker2";
 import moment, { Moment } from "moment-jalaali";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const AgeCalculator: React.FC = () => {
+interface AgeCalculatorProps {
+  darkMode: boolean;
+}
+const AgeCalculator: React.FC<AgeCalculatorProps> = ({ darkMode }) => {
   const [birthDate, setBirthDate] = useState<Moment | undefined>(undefined);
   const [currentDate, setCurrentDate] = useState<Moment | undefined>(moment());
   const [age, setAge] = useState<{
@@ -115,7 +117,11 @@ const AgeCalculator: React.FC = () => {
         isGregorian={language === "en"}
         value={currentDate || undefined}
         onChange={(value) => setCurrentDate(value)}
-        className="bg-transparent  text-black placeholder-black focus:outline-none text-2xl  border border-gray-300 p-2 mt-4 rounded-md"
+        className={`${
+          darkMode
+            ? "bg-white text-black placeholder-gray-400 border-gray-600"
+            : "bg-transparent text-black placeholder-black border-gray-300"
+        } focus:outline-none text-2xl p-2 mt-4 rounded-md border border-gray-300`}
         inputJalaaliFormat="jYYYY/jMM/jDD"
       />
 
@@ -124,7 +130,11 @@ const AgeCalculator: React.FC = () => {
         isGregorian={language === "en"}
         value={birthDate || undefined}
         onChange={(value) => setBirthDate(value)}
-        className="bg-transparent text-black placeholder-black focus:outline-none text-2xl border border-gray-300 p-2 rounded-md"
+        className={`${
+          darkMode
+            ? "bg-white text-black placeholder-gray-400 border-gray-600"
+            : "bg-transparent text-black placeholder-black border-gray-300"
+        } focus:outline-none text-2xl p-2 mt-4 rounded-md border border-gray-300`}
         inputJalaaliFormat="jYYYY/jMM/jDD"
       />
 
@@ -136,7 +146,9 @@ const AgeCalculator: React.FC = () => {
       </button>
 
       {age !== null && (
-        <div className="text-black text-2xl mt-4">
+        <div
+          className={`${darkMode ? "text-white" : "text-black"}text-2xl mt-4`}
+        >
           {language === "fa"
             ? `سن شما: ${age.years} سال، ${age.months} ماه، ${age.days} روز، ${age.hours} ساعت، ${age.minutes} دقیقه و ${age.seconds} ثانیه`
             : `Your age: ${age.years} years, ${age.months} months, ${age.days} days, ${age.hours} hours, ${age.minutes} minutes and ${age.seconds} seconds`}

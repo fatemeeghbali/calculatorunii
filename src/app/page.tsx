@@ -31,7 +31,7 @@ export default function Example(props: Props) {
   const [selectedComponent, setSelectedComponent] = useState<
     "calculator" | "ageCalculator" | "none"
   >("none");
-
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -46,6 +46,10 @@ export default function Example(props: Props) {
     } else {
       setSelectedComponent("none");
     }
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
   };
 
   const drawer = (
@@ -75,7 +79,7 @@ export default function Example(props: Props) {
       <AppBar
         component="nav"
         sx={{
-          backgroundColor: "#e6c9fe",
+          backgroundColor: darkMode ? "#14193D" : "#e6c9fe",
         }}
       >
         <Toolbar>
@@ -99,14 +103,18 @@ export default function Example(props: Props) {
               title="CALCULATOR SITE"
             />
           </Typography>
+
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button
                 key={item}
                 sx={{
-                  color: "#000000",
+                  color: darkMode ? "#ffffff" : "#000000",
                   fontSize: "1rem",
-                  "&:hover": { backgroundColor: "#DABFE3", color: "#7A03A1" },
+                  "&:hover": {
+                    backgroundColor: "#DABFE3",
+                    color: "#7A03A1",
+                  },
                 }}
                 onClick={() => handleNavItemClick(item)}
               >
@@ -116,6 +124,24 @@ export default function Example(props: Props) {
           </Box>
         </Toolbar>
       </AppBar>
+      <Box
+        sx={{
+          position: "relative",
+          top: "110px",
+          left: 18,
+          padding: "8px",
+          // marginTop: "16px",
+        }}
+      >
+        <button
+          onClick={toggleDarkMode}
+          className={`${
+            darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-black"
+          } p-2 pr-3 pl-2.5  rounded-3xl`}
+        >
+          {darkMode ? "🌙" : "☀️"}
+        </button>
+      </Box>
       <nav>
         <Drawer
           container={container}
@@ -136,11 +162,14 @@ export default function Example(props: Props) {
           {drawer}
         </Drawer>
       </nav>
+
       <Box
         component="main"
         sx={{
           p: 14,
-          marginLeft: 6,
+          backgroundColor: darkMode ? "#1B1F3E" : "#f5f5f5",
+          color: darkMode ? "#ffffff" : "#000000",
+          // marginLeft: 6,
           marginTop: 4,
           display: "flex",
           justifyContent: "center",
@@ -152,11 +181,13 @@ export default function Example(props: Props) {
 
         {/* انتخاب کامپوننت مناسب بر اساس وضعیت انتخاب شده */}
         {/* <div className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-pink-500 md:dark:hover:text-pink-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"> */}
-        {selectedComponent === "calculator" && <Calculator />}
+        {selectedComponent === "calculator" && (
+          <Calculator darkMode={darkMode} />
+        )}
         {/* </div> */}
         {selectedComponent === "ageCalculator" && (
           <>
-            <AgeCalculator />
+            <AgeCalculator darkMode={darkMode} />
           </>
         )}
       </Box>
