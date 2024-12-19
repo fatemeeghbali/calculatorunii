@@ -1,22 +1,221 @@
+// "use client";
+// import React, { useState } from "react";
+// import Lottie from "react-lottie-player";
+// import Calculatoricon from "./lottie/Calculatoricon.json";
+// import Calculator from "./calculator/page";
+// import AgeCalculator from "./AgeCalculator/page";
+// import AppBar from "@mui/material/AppBar";
+// import Box from "@mui/material/Box";
+// import CssBaseline from "@mui/material/CssBaseline";
+// import Divider from "@mui/material/Divider";
+// import Drawer from "@mui/material/Drawer";
+// import IconButton from "@mui/material/IconButton";
+// import List from "@mui/material/List";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemText from "@mui/material/ListItemText";
+// import Toolbar from "@mui/material/Toolbar";
+// import Typography from "@mui/material/Typography";
+// import Button from "@mui/material/Button";
+
+// interface Props {
+//   window?: () => Window;
+// }
+
+// export default function Example(props: Props) {
+//   const drawerWidth = 240;
+//   const navItems = ["ماشین حساب", "محاسبه سن"];
+
+//   // مدیریت وضعیت انتخاب شده
+//   const [selectedComponent, setSelectedComponent] = useState<
+//     "calculator" | "ageCalculator" | "none"
+//   >("none");
+//   const [darkMode, setDarkMode] = useState<boolean>(false);
+//   const { window } = props;
+//   const [mobileOpen, setMobileOpen] = useState(false);
+//   const handleDrawerToggle = () => {
+//     setMobileOpen((prevState) => !prevState);
+//   };
+
+//   // click navbar
+//   const handleNavItemClick = (item: string) => {
+//     if (item === "ماشین حساب") {
+//       setSelectedComponent("calculator");
+//     } else if (item === "محاسبه سن") {
+//       setSelectedComponent("ageCalculator");
+//     } else {
+//       setSelectedComponent("none");
+//     }
+//   };
+
+//   //dark mode
+//   const toggleDarkMode = () => {
+//     setDarkMode((prev) => !prev);
+//   };
+
+//   const drawer = (
+//     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+//       <Divider />
+//       <List>
+//         {navItems.map((item) => (
+//           <ListItem key={item} disablePadding>
+//             <ListItemButton
+//               sx={{ textAlign: "center" }}
+//               onClick={() => handleNavItemClick(item)}
+//             >
+//               <ListItemText primary={item} />
+//             </ListItemButton>
+//           </ListItem>
+//         ))}
+//       </List>
+//     </Box>
+//   );
+
+//   const container =
+//     window !== undefined ? () => window().document.body : undefined;
+
+//   return (
+//     <Box>
+//       <CssBaseline />
+//       <AppBar
+//         component="nav"
+//         sx={{
+//           backgroundColor: darkMode ? "#14193D" : "#e6c9fe",
+//         }}
+//       >
+//         <Toolbar>
+//           <IconButton
+//             color="inherit"
+//             aria-label="open drawer"
+//             edge="start"
+//             onClick={handleDrawerToggle}
+//             sx={{ mr: 2, display: { sm: "none" } }}
+//           ></IconButton>
+//           <Typography
+//             variant="h6"
+//             component="div"
+//             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+//           >
+//             <Lottie
+//               loop
+//               animationData={Calculatoricon}
+//               play
+//               style={{ width: 100, height: 100 }}
+//               title="CALCULATOR SITE"
+//             />
+//           </Typography>
+
+//           <Box sx={{ display: { xs: "none", sm: "block" } }}>
+//             {navItems.map((item) => (
+//               <Button
+//                 key={item}
+//                 sx={{
+//                   color: darkMode ? "#ffffff" : "#000000",
+//                   fontSize: "1rem",
+//                   "&:hover": {
+//                     backgroundColor: "#DABFE3",
+//                     color: "#7A03A1",
+//                   },
+//                 }}
+//                 onClick={() => handleNavItemClick(item)}
+//               >
+//                 {item}
+//               </Button>
+//             ))}
+//           </Box>
+//         </Toolbar>
+//       </AppBar>
+//       <Box
+//         sx={{
+//           position: "relative",
+//           top: "110px",
+//           left: 18,
+//           padding: "8px",
+//         }}
+//       >
+//         <button
+//           onClick={toggleDarkMode}
+//           className={`${
+//             darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-black"
+//           } p-2 pr-3 pl-2.5  rounded-3xl`}
+//         >
+//           {darkMode ? "🌙" : "☀️"}
+//         </button>
+//       </Box>
+//       <nav>
+//         <Drawer
+//           container={container}
+//           variant="temporary"
+//           open={mobileOpen}
+//           onClose={handleDrawerToggle}
+//           ModalProps={{
+//             keepMounted: true,
+//           }}
+//           sx={{
+//             display: { xs: "block", sm: "none" },
+//             "& .MuiDrawer-paper": {
+//               boxSizing: "border-box",
+//               width: drawerWidth,
+//             },
+//           }}
+//         >
+//           {drawer}
+//         </Drawer>
+//       </nav>
+
+//       <Box
+//         component="main"
+//         sx={{
+//           p: 14,
+//           backgroundColor: darkMode ? "#1B1F3E" : "#f5f5f5",
+//           color: darkMode ? "#ffffff" : "#000000",
+//           // marginLeft: 6,
+//           marginTop: 4,
+//           display: "flex",
+//           justifyContent: "center",
+//           alignItems: "center",
+//           minHeight: "100vh",
+//         }}
+//       >
+//         <Toolbar />
+
+//         {/* انتخاب کامپوننت مناسب بر اساس وضعیت انتخاب شده */}
+//         {/* <div className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-pink-500 md:dark:hover:text-pink-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"> */}
+//         {selectedComponent === "calculator" && (
+//           <Calculator darkMode={darkMode} />
+//         )}
+//         {/* </div> */}
+//         {selectedComponent === "ageCalculator" && (
+//           <>
+//             <AgeCalculator darkMode={darkMode} />
+//           </>
+//         )}
+//       </Box>
+//     </Box>
+//   );
+// }
 "use client";
 import React, { useState } from "react";
 import Lottie from "react-lottie-player";
 import Calculatoricon from "./lottie/Calculatoricon.json";
 import Calculator from "./calculator/page";
 import AgeCalculator from "./AgeCalculator/page";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import {
+  AppBar,
+  Box,
+  CssBaseline,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Button,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 interface Props {
   window?: () => Window;
@@ -26,18 +225,17 @@ export default function Example(props: Props) {
   const drawerWidth = 240;
   const navItems = ["ماشین حساب", "محاسبه سن"];
 
-  // مدیریت وضعیت انتخاب شده
   const [selectedComponent, setSelectedComponent] = useState<
     "calculator" | "ageCalculator" | "none"
   >("none");
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
-  // click navbar
   const handleNavItemClick = (item: string) => {
     if (item === "ماشین حساب") {
       setSelectedComponent("calculator");
@@ -46,9 +244,9 @@ export default function Example(props: Props) {
     } else {
       setSelectedComponent("none");
     }
+    setMobileOpen(false); // بستن منو در موبایل
   };
 
-  //dark mode
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
   };
@@ -90,7 +288,14 @@ export default function Example(props: Props) {
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: "none" } }}
-          ></IconButton>
+          >
+            <MenuIcon
+              sx={{
+                backgroundColor: darkMode ? "#14193D" : "#e6c9fe",
+                color: darkMode ? "#ffffff" : "#000000",
+              }}
+            />
+          </IconButton>
           <Typography
             variant="h6"
             component="div"
@@ -100,11 +305,10 @@ export default function Example(props: Props) {
               loop
               animationData={Calculatoricon}
               play
-              style={{ width: 100, height: 100 }}
+              style={{ width: 90, height: 90 }}
               title="CALCULATOR SITE"
             />
           </Typography>
-
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button
@@ -125,7 +329,7 @@ export default function Example(props: Props) {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box
+      {/* <Box
         sx={{
           position: "relative",
           top: "110px",
@@ -137,11 +341,40 @@ export default function Example(props: Props) {
           onClick={toggleDarkMode}
           className={`${
             darkMode ? "bg-gray-700 text-white" : "bg-gray-200 text-black"
-          } p-2 pr-3 pl-2.5  rounded-3xl`}
+          } p-2 pr-3 pl-2.5 rounded-3xl`}
+        >
+          {darkMode ? "🌙" : "☀️"}
+        </button>
+      </Box> */}
+
+      <Box
+        sx={{
+          position: "relative",
+          top: "110px",
+          left: 18,
+          padding: "4px",
+          // تنظیمات ریسپانسیو
+          "@media (max-width: 768px)": {
+            top: "70px", // در صفحه‌های کوچک‌تر
+          },
+          "@media (max-width: 480px)": {
+            position: "absolute",
+            top: "8px", // فاصله از بالا
+            left: "20.5rem", // فاصله از راست
+            zIndex: 1300, // بالاترین اولویت
+          },
+        }}
+      >
+        <button
+          onClick={toggleDarkMode}
+          className={`${
+            darkMode ? "bg-gray-700  text-white" : "bg-gray-200  text-black"
+          } p-2 pr-3 pl-2.5 rounded-3xl`}
         >
           {darkMode ? "🌙" : "☀️"}
         </button>
       </Box>
+
       <nav>
         <Drawer
           container={container}
@@ -162,15 +395,12 @@ export default function Example(props: Props) {
           {drawer}
         </Drawer>
       </nav>
-
       <Box
         component="main"
         sx={{
-          p: 14,
+          p: 3,
           backgroundColor: darkMode ? "#1B1F3E" : "#f5f5f5",
           color: darkMode ? "#ffffff" : "#000000",
-          // marginLeft: 6,
-          marginTop: 4,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -178,17 +408,11 @@ export default function Example(props: Props) {
         }}
       >
         <Toolbar />
-
-        {/* انتخاب کامپوننت مناسب بر اساس وضعیت انتخاب شده */}
-        {/* <div className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-pink-500 md:dark:hover:text-pink-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"> */}
         {selectedComponent === "calculator" && (
           <Calculator darkMode={darkMode} />
         )}
-        {/* </div> */}
         {selectedComponent === "ageCalculator" && (
-          <>
-            <AgeCalculator darkMode={darkMode} />
-          </>
+          <AgeCalculator darkMode={darkMode} />
         )}
       </Box>
     </Box>

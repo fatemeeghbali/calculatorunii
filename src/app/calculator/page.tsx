@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { CgArrowsExchangeAlt } from "react-icons/cg";
 import { GrHistory } from "react-icons/gr";
 import { MdDelete, MdFileCopy } from "react-icons/md";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+// import { useMediaQuery } from "@mui/material";
+
 interface Operator {
   precedence: number;
   associativity: "L" | "R";
@@ -18,6 +22,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
   const [showHistory, setShowHistory] = useState<boolean>(false);
   const [showAbout, setShowAbout] = useState<boolean>(false);
   const [showAboutText, setShowAboutText] = useState<boolean>(false);
+  const [showAdvancedButtons, setShowAdvancedButtons] = useState(false);
 
   const historyRef = useRef<HTMLDivElement | null>(null);
   const aboutRef = useRef<HTMLDivElement | null>(null);
@@ -353,63 +358,68 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
   };
 
   return (
-    // <div className="bg-[#FAF6FD] w-full text-black p-4 rounded-lg shadow-lg max-w-fit  max-h-fit">
     <div
-      className={`w-full p-4 rounded-lg shadow-lg max-w-fit  max-h-fit ${
+      className={`flex flex-col  p-4 mr-6 rounded-lg shadow-lg max-w-fit max-h-fit ${
         darkMode ? "bg-[#393939] text-white" : "bg-[#FAF6FD] text-black"
       }`}
     >
-      <div className="flex items-center bg-[#FAF6FD] text-black  p-2 rounded-md mb-10">
-        {/* <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtHlVCKEZjSlFXi2l1G-VXHFGyKkoUnek3Uw&s" // لینک تصویر فانتزی روباه را اینجا قرار دهید
-          alt="Fox"
-          className="h-8 w-8 mr-2"
-          /> */}
-
+      <div className="flex items-center sm:text-base md:text-lg lg:text-xl bg-[#FAF6FD] text-black p-2 rounded-md mb-10">
         <input
           type="text"
           value={input}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
           placeholder="0"
-          className="flex-grow bg-transparent text-black  placeholder-black focus:outline-none text-2xl"
+          className="flex-grow bg-transparent  placeholder-black focus:outline-none text-lg sm:text-xl md:text-2xl items-center lg:text-xl"
         />
 
-        <div className="relative">
+        <div className="relative flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setShowHistory(!showHistory)}
-            className="text-black text-2xl ml-2"
+            className="text-black text-sm sm:text-base md:text-lg lg:text-xl items-center"
           >
             <GrHistory />
           </button>
-
           <button
-            className="text-black text-2xl ml-4"
             onClick={() => setShowAbout(!showAbout)}
+            className="text-black text-sm sm:text-base md:text-lg lg:text-xl items-center"
           >
             <BsThreeDotsVertical />
           </button>
+          {/* advance button */}
+          <div className="mt-4 block">
+            <button
+              className="text-black text-sm sm:text-base md:text-lg lg:text-xl items-center"
+              onClick={() => setShowAdvancedButtons(!showAdvancedButtons)}
+            >
+              {showAdvancedButtons ? (
+                <CgArrowsExchangeAlt />
+              ) : (
+                <CgArrowsExchangeAlt />
+              )}
+            </button>
+          </div>
+
           {showAbout && (
             <div
               ref={aboutRef}
-              className="absolute right-0 mt-2 bg-white text-black shadow-lg w-60 h-10 rounded-md p-2"
+              className="absolute right-0 mt-2 bg-white text-black shadow-lg w-40 sm:w-60 md:w-80 sm:text-2xl  md:text-2xl items-center lg:text-xl h-10 rounded-md p-2"
               onClick={toggleAbout}
             >
-              <h2 className="mb-4 text-lg bg-[#d0c8d6] rounded-lg flex justify-center items-center">
+              <h2 className="mb-4 text-sm sm:text-base md:text-lg bg-[#d0c8d6] rounded-lg flex justify-center items-center">
                 درباره ما
               </h2>
             </div>
           )}
-
           {showAboutText && (
             <div
               ref={aboutRefText}
-              className="absolute right-2 mt-2 bg-white text-black shadow-lg w-80 rounded-md p-4"
+              className="absolute right-2 mt-2 bg-white text-black shadow-lg w-60 sm:w-72 md:w-80 rounded-md p-4 sm:text-2x top-4  md:text-2xl items-center lg:text-xl"
             >
-              <h2 className="text-lg font-bold mb-2 text-center bg-fuchsia-200 rounded-md">
+              <h2 className="text-sm  font-bold mb-2 text-center bg-fuchsia-200 rounded-md sm:text-2xl  md:text-2xl items-center lg:text-xl">
                 درباره ما
               </h2>
-              <p className="text-right">
+              <p className="text-sm sm:text-base text-right  md:text-2xl  items-center lg:text-xl">
                 قابلیت های پیشرفته ای دارند که محاسبات پیچیده مهندسی را تسهیل می
                 کنند. ویژگی های اصلی ماشین حساب مهندسی شامل محاسبات علمی، مهندسی
                 و تحلیلی پیشرفته است. این ماشین ها می توانند عملیات مهندسی همچون
@@ -424,12 +434,12 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
           {showHistory && (
             <div
               ref={historyRef}
-              className="absolute right-0 mt-2 bg-white text-black shadow-lg w-80 h-[30rem] rounded-md p-2"
+              className="absolute right-0 mt-2 bg-white text-black shadow-lg w-60 sm:w-72 md:w-80 h-80 sm:h-96 md:h-[30rem] rounded-md p-2 sm:text-2xl  md:text-2xl items-center lg:text-xl"
             >
-              <h2 className="mb-4 text-lg bg-[#d0c8d6] rounded-lg flex justify-center items-center">
+              <h2 className="mb-4 text-sm sm:text-base md:text-lg bg-[#d0c8d6] rounded-lg flex justify-center items-center  lg:text-xl">
                 تاریخچه
               </h2>
-              <ul>
+              <ul className="text-sm sm:text-base">
                 {history.map((item, index) => (
                   <li key={index} className="flex items-center">
                     <span
@@ -438,7 +448,6 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
                     >
                       {item}
                     </span>
-
                     <button
                       className="ml-2 text-purple-950"
                       onClick={() => handleDeleteItem(index)}
@@ -456,7 +465,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
               </ul>
               <button
                 onClick={handleDeleteAll}
-                className=" text-lg w-72 ml-2 bg-[#d0c8d6] rounded-lg bottom-0  absolute mb-4 flex justify-center items-center"
+                className=" sm:text-base text-lg w-40 sm:w-60 md:w-72 ml-2 bg-[#d0c8d6] rounded-lg bottom-0 absolute mb-4 flex justify-center items-center "
               >
                 حذف تاریخچه
               </button>
@@ -464,243 +473,248 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
           )}
         </div>
       </div>
-      {/* <div className="bg-[#f8f2fd] w-full h-full rounded-lg shadow-lg"> */}
-      <div className="grid grid-cols-8 gap-4 w-full mt-4">
-        <button
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-[#D3C9DA]  text-violet-950  text-xl"
-          onClick={handleClear}
-        >
-          C
-        </button>
-        {/* <button
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-orange-400 text-white"
-          // onClick={handleClear}
-        >
-          +/-
-        </button> */}
-        <button
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-[#D3C9DA]  text-violet-950  text-xl"
-          onClick={handleDelete}
-        >
-          DEL
-        </button>
-        <button
-          key="%"
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-[#D3C9DA]  text-violet-950 text-xl"
-          onClick={() => handleButtonClick("%")}
-        >
-          %
-        </button>
-        <button
-          key="/"
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-purple-700 text-white text-xl"
-          onClick={() => handleButtonClick("/")}
-        >
-          /
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick("mod")}
-        >
-          mod
-        </button>
-
-        <button
-          key="("
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick("(")}
-        >
-          {"("}
-        </button>
-
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "asin(" : "sin(")}
-        >
-          {inverse ? "asin" : "sin"}
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "³" : "²")}
-        >
-          {inverse ? "x³" : "x²"}
-        </button>
-
-        {["7", "8", "9"].map((value) => (
+      <div className="flex">
+        <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 gap-2 sm:gap-4 w-full mt-4">
           <button
-            key={value}
-            className="p-4 rounded-full shadow-lg w-20 h-20 bg-violet-100	 text-violet-900  text-xl"
-            onClick={() => handleButtonClick(value)}
+            className="p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-[#D3C9DA] text-violet-950 text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={handleClear}
           >
-            {value}
+            C
           </button>
-        ))}
-        <button
-          key="*"
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-purple-700 text-white  text-xl"
-          onClick={() => handleButtonClick("*")}
-        >
-          *
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick("^")}
-        >
-          ^
-        </button>
-        <button
-          key=")"
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(")")}
-        >
-          {")"}
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "atan(" : "tan(")}
-        >
-          {inverse ? "atan" : "tan"}
-        </button>
 
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "tan⁻¹" : "1/")}
-        >
-          {inverse ? "tan⁻¹" : "1/X"}
-          {}
-        </button>
-
-        {["4", "5", "6"].map((value) => (
           <button
-            key={value}
-            className="p-4 rounded-full shadow-lg w-20 h-20 bg-violet-100	 text-violet-900  text-xl"
-            onClick={() => handleButtonClick(value)}
+            className="p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 bg-[#D3C9DA] text-violet-950 text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={handleDelete}
           >
-            {value}
+            DEL
           </button>
-        ))}
-        <button
-          key="-"
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-purple-700 text-white text-xl"
-          onClick={() => handleButtonClick("-")}
-        >
-          -
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "ln(" : "log(")}
-        >
-          {inverse ? "ln" : "log"}
-        </button>
-
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "e" : "π")}
-        >
-          {inverse ? "e" : "π"}
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "acos(" : "cos(")}
-        >
-          {inverse ? "acos" : "cos"}
-        </button>
-
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "sin⁻¹(" : "cos⁻¹(")}
-        >
-          {inverse ? "sin⁻¹" : "cos⁻¹"}
-        </button>
-        {["1", "2", "3"].map((value) => (
           <button
-            key={value}
-            className="p-4 rounded-full shadow-lg w-20 h-20 bg-violet-100	 text-violet-900 text-xl"
-            onClick={() => handleButtonClick(value)}
+            key="%"
+            className="bg-[#D3C9DA] text-violet-950  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={() => handleButtonClick("%")}
           >
-            {value}
+            %
           </button>
-        ))}
-        <button
-          key="+"
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-purple-700 text-white  text-xl"
-          onClick={() => handleButtonClick("+")}
-        >
-          +
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick("|")}
-        >
-          |x|
-        </button>
+          <button
+            key="/"
+            className=" bg-purple-700 text-white  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={() => handleButtonClick("/")}
+          >
+            /
+          </button>
+          {["7", "8", "9"].map((value) => (
+            <button
+              key={value}
+              className="  bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(value)}
+            >
+              {value}
+            </button>
+          ))}
+          <button
+            key="*"
+            className=" bg-purple-700 text-white p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={() => handleButtonClick("*")}
+          >
+            *
+          </button>
 
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "∛(" : "√(")}
-        >
-          {inverse ? "∛" : "√"}
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "acosh(" : "cosh(")}
-        >
-          {inverse ? "acosh" : "cosh"}
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "atanh(" : "tanh(")}
-        >
-          {inverse ? "atanh" : "tanh"}
-        </button>
-        <button
-          key="0"
-          className="col-span-2 p-6 text-start rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick("0")}
-        >
-          0
-        </button>
-        <button
-          key="."
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(".")}
-        >
-          .
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg w-20 h-20 bg-purple-700 text-white text-xl"
-          onClick={handleEvaluate}
-        >
-          =
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick("!")}
-        >
-          x!
-        </button>
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900 text-xl"
-          onClick={() => handleButtonClick(inverse ? "+" : "-")}
-        >
-          {inverse ? "+" : "-/+"}
-        </button>
+          {["4", "5", "6"].map((value) => (
+            <button
+              key={value}
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(value)}
+            >
+              {value}
+            </button>
+          ))}
+          <button
+            key="-"
+            className=" bg-purple-700 text-white p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={() => handleButtonClick("-")}
+          >
+            -
+          </button>
 
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={() => handleButtonClick(inverse ? "asinh(" : "sinh(")}
-        >
-          {inverse ? "asinh" : "sinh"}
-        </button>
+          {["1", "2", "3"].map((value) => (
+            <button
+              key={value}
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(value)}
+            >
+              {value}
+            </button>
+          ))}
+          <button
+            key="+"
+            className=" bg-purple-700 text-white  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={() => handleButtonClick("+")}
+          >
+            +
+          </button>
 
-        <button
-          className="p-4 rounded-full shadow-lg bg-violet-100	 text-violet-900  text-xl"
-          onClick={toggleInverse}
-        >
-          inv
-        </button>
+          <button
+            key="0"
+            className="col-span-2 p-6 text-start bg-violet-100 text-violet-900 flex items-center justify-center rounded-full shadow-lg sm:p-4 h-12 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={() => handleButtonClick("0")}
+          >
+            <span className="block w-full text-center">0</span>
+          </button>
+          <button
+            key="."
+            className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={() => handleButtonClick(".")}
+          >
+            .
+          </button>
+          <button
+            className=" bg-purple-700 text-white p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+            onClick={handleEvaluate}
+          >
+            =
+          </button>
+        </div>
+        {showAdvancedButtons && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-5 gap-2 sm:gap-5 w-full mt-4"
+          >
+            <button
+              className=" bg-violet-100	 text-violet-900   p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick("mod")}
+            >
+              mod
+            </button>
+
+            <button
+              key="("
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick("(")}
+            >
+              {"("}
+            </button>
+
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "asin(" : "sin(")}
+            >
+              {inverse ? "asin" : "sin"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "³" : "²")}
+            >
+              {inverse ? "x³" : "x²"}
+            </button>
+
+            <button
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick("^")}
+            >
+              ^
+            </button>
+            <button
+              key=")"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(")")}
+            >
+              {")"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "atan(" : "tan(")}
+            >
+              {inverse ? "atan" : "tan"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "tan⁻¹" : "1/")}
+            >
+              {inverse ? "tan⁻¹" : "1/X"}
+              {}
+            </button>
+
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "ln(" : "log(")}
+            >
+              {inverse ? "ln" : "log"}
+            </button>
+
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "e" : "π")}
+            >
+              {inverse ? "e" : "π"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "acos(" : "cos(")}
+            >
+              {inverse ? "acos" : "cos"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "sin⁻¹(" : "cos⁻¹(")}
+            >
+              {inverse ? "sin⁻¹" : "cos⁻¹"}
+            </button>
+
+            <button
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick("|")}
+            >
+              |x|
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "∛(" : "√(")}
+            >
+              {inverse ? "∛" : "√"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "acosh(" : "cosh(")}
+            >
+              {inverse ? "acosh" : "cosh"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "atanh(" : "tanh(")}
+            >
+              {inverse ? "atanh" : "tanh"}
+            </button>
+
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick("!")}
+            >
+              x!
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "+" : "-")}
+            >
+              {inverse ? "+" : "-/+"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={() => handleButtonClick(inverse ? "asinh(" : "sinh(")}
+            >
+              {inverse ? "asinh" : "sinh"}
+            </button>
+            <button
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              onClick={toggleInverse}
+            >
+              inv
+            </button>
+          </motion.div>
+        )}
       </div>
-      {/* </div> */}
     </div>
   );
 };

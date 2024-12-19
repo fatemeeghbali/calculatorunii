@@ -89,11 +89,79 @@ const AgeCalculator: React.FC<AgeCalculatorProps> = ({ darkMode }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-[70rem] h-[30rem] space-y-4">
-      <div className="mb-4">
+    // <div className="flex flex-col items-center justify-center w-[70rem] h-[30rem] space-y-4">
+    //   <div className="mb-4">
+    //     <button
+    //       onClick={() => setLanguage("fa")}
+    //       className={`text-xl ml-4 p-2 ${
+    //         language === "fa"
+    //           ? "bg-purple-500 text-white"
+    //           : "bg-gray-200 text-black"
+    //       } rounded-md`}
+    //     >
+    //       فارسی
+    //     </button>
+    //     <button
+    //       onClick={() => setLanguage("en")}
+    //       className={`text-xl ml-4 p-2 ${
+    //         language === "en"
+    //           ? "bg-purple-500 text-white"
+    //           : "bg-gray-200 text-black"
+    //       } rounded-md`}
+    //     >
+    //       English
+    //     </button>
+    //   </div>
+    //   <DatePicker
+    //     timePicker={false}
+    //     isGregorian={language === "en"}
+    //     value={currentDate || undefined}
+    //     onChange={(value) => setCurrentDate(value)}
+    //     className={`${
+    //       darkMode
+    //         ? "bg-white text-black placeholder-gray-400 border-gray-600"
+    //         : "bg-transparent text-black placeholder-black border-gray-300"
+    //     } focus:outline-none text-2xl p-2 mt-4 rounded-md border border-gray-300`}
+    //     inputJalaaliFormat="jYYYY/jMM/jDD"
+    //   />
+
+    //   <DatePicker
+    //     timePicker={false}
+    //     isGregorian={language === "en"}
+    //     value={birthDate || undefined}
+    //     onChange={(value) => setBirthDate(value)}
+    //     className={`${
+    //       darkMode
+    //         ? "bg-white text-black placeholder-gray-400 border-gray-600"
+    //         : "bg-transparent text-black placeholder-black border-gray-300"
+    //     } focus:outline-none text-2xl p-2 mt-4 rounded-md border border-gray-300`}
+    //     inputJalaaliFormat="jYYYY/jMM/jDD"
+    //   />
+
+    //   <button
+    //     onClick={handleCalculateAge}
+    //     className="text-black text-2xl ml-4 p-2 bg-purple-500 hover:bg-purple-700  rounded-md"
+    //   >
+    //     {language === "fa" ? "محاسبه سن" : "Calculate Age"}
+    //   </button>
+
+    //   {age !== null && (
+    //     <div
+    //       className={`${darkMode ? "text-white" : "text-black"}text-2xl mt-4`}
+    //     >
+    //       {language === "fa"
+    //         ? `سن شما: ${age.years} سال، ${age.months} ماه، ${age.days} روز، ${age.hours} ساعت، ${age.minutes} دقیقه و ${age.seconds} ثانیه`
+    //         : `Your age: ${age.years} years, ${age.months} months, ${age.days} days, ${age.hours} hours, ${age.minutes} minutes and ${age.seconds} seconds`}
+    //     </div>
+    //   )}
+    //   <ToastContainer />
+    // </div>
+
+    <div className="flex flex-col items-center justify-center w-full max-w-4xl mx-auto p-4 space-y-4">
+      <div className="flex flex-wrap justify-center gap-4 mb-4">
         <button
           onClick={() => setLanguage("fa")}
-          className={`text-xl ml-4 p-2 ${
+          className={`text-lg sm:text-xl p-2 ${
             language === "fa"
               ? "bg-purple-500 text-white"
               : "bg-gray-200 text-black"
@@ -103,7 +171,7 @@ const AgeCalculator: React.FC<AgeCalculatorProps> = ({ darkMode }) => {
         </button>
         <button
           onClick={() => setLanguage("en")}
-          className={`text-xl ml-4 p-2 ${
+          className={`text-lg sm:text-xl p-2 ${
             language === "en"
               ? "bg-purple-500 text-white"
               : "bg-gray-200 text-black"
@@ -112,6 +180,7 @@ const AgeCalculator: React.FC<AgeCalculatorProps> = ({ darkMode }) => {
           English
         </button>
       </div>
+
       <DatePicker
         timePicker={false}
         isGregorian={language === "en"}
@@ -121,7 +190,7 @@ const AgeCalculator: React.FC<AgeCalculatorProps> = ({ darkMode }) => {
           darkMode
             ? "bg-white text-black placeholder-gray-400 border-gray-600"
             : "bg-transparent text-black placeholder-black border-gray-300"
-        } focus:outline-none text-2xl p-2 mt-4 rounded-md border border-gray-300`}
+        } focus:outline-none text-lg sm:text-2xl p-2 mt-4 rounded-md border border-gray-300 w-full max-w-md`}
         inputJalaaliFormat="jYYYY/jMM/jDD"
       />
 
@@ -134,20 +203,22 @@ const AgeCalculator: React.FC<AgeCalculatorProps> = ({ darkMode }) => {
           darkMode
             ? "bg-white text-black placeholder-gray-400 border-gray-600"
             : "bg-transparent text-black placeholder-black border-gray-300"
-        } focus:outline-none text-2xl p-2 mt-4 rounded-md border border-gray-300`}
+        } focus:outline-none text-lg sm:text-2xl p-2 mt-4 rounded-md border border-gray-300 w-full max-w-md`}
         inputJalaaliFormat="jYYYY/jMM/jDD"
       />
 
       <button
         onClick={handleCalculateAge}
-        className="text-black text-2xl ml-4 p-2 bg-purple-500 hover:bg-purple-700  rounded-md"
+        className="text-white text-lg sm:text-2xl p-2 bg-purple-500 hover:bg-purple-700 rounded-md w-full max-w-xs"
       >
         {language === "fa" ? "محاسبه سن" : "Calculate Age"}
       </button>
 
       {age !== null && (
         <div
-          className={`${darkMode ? "text-white" : "text-black"}text-2xl mt-4`}
+          className={`${
+            darkMode ? "text-white" : "text-black"
+          } text-lg sm:text-2xl mt-4 text-center`}
         >
           {language === "fa"
             ? `سن شما: ${age.years} سال، ${age.months} ماه، ${age.days} روز، ${age.hours} ساعت، ${age.minutes} دقیقه و ${age.seconds} ثانیه`
