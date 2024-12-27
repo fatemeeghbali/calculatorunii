@@ -387,9 +387,9 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
             <BsThreeDotsVertical />
           </button>
           {/* advance button */}
-          <div className="mt-4 block">
+          <div className="mt-4 block ">
             <button
-              className="text-black text-sm sm:text-base md:text-lg lg:text-xl items-center"
+              className="text-black text-sm sm:text-base md:text-lg lg:text-xl items-center hidden sm:block"
               onClick={() => setShowAdvancedButtons(!showAdvancedButtons)}
             >
               {showAdvancedButtons ? (
@@ -414,7 +414,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
           {showAboutText && (
             <div
               ref={aboutRefText}
-              className="absolute right-2 mt-2 bg-white text-black shadow-lg w-60 sm:w-72 md:w-80 rounded-md p-4 sm:text-2x top-4  md:text-2xl items-center lg:text-xl"
+              className="absolute right-2  mt-2 bg-white text-black shadow-lg w-60 sm:w-72 md:w-80 rounded-md p-4 sm:text-2x top-4  md:text-2xl items-center lg:text-xl"
             >
               <h2 className="text-sm  font-bold mb-2 text-center bg-fuchsia-200 rounded-md sm:text-2xl  md:text-2xl items-center lg:text-xl">
                 درباره ما
@@ -434,7 +434,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
           {showHistory && (
             <div
               ref={historyRef}
-              className="absolute right-0 mt-2 bg-white text-black shadow-lg w-60 sm:w-72 md:w-80 h-80 sm:h-96 md:h-[30rem] rounded-md p-2 sm:text-2xl  md:text-2xl items-center lg:text-xl"
+              className="absolute right-0 top-4  mt-2 bg-white text-black shadow-lg w-60 sm:w-60 md:w-80 h-80 sm:h-72 md:h-[30rem] rounded-md p-2 sm:text-2xl  md:text-2xl items-center lg:text-xl"
             >
               <h2 className="mb-4 text-sm sm:text-base md:text-lg bg-[#d0c8d6] rounded-lg flex justify-center items-center  lg:text-xl">
                 تاریخچه
@@ -465,7 +465,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
               </ul>
               <button
                 onClick={handleDeleteAll}
-                className=" sm:text-base text-lg w-40 sm:w-60 md:w-72 ml-2 bg-[#d0c8d6] rounded-lg bottom-0 absolute mb-4 flex justify-center items-center "
+                className="w-[13rem] sm:w-48 md:w-72 ml-2 bottom-0 absolute mb-4 flex justify-center items-center text-sm sm:text-base md:text-lg bg-[#d0c8d6] rounded-lg lg:text-xl"
               >
                 حذف تاریخچه
               </button>
@@ -583,7 +583,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
             className="grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-5 gap-2 sm:gap-5 w-full mt-4"
           >
             <button
-              className=" bg-violet-100	 text-violet-900   p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900   p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick("mod")}
             >
               mod
@@ -591,46 +591,46 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
 
             <button
               key="("
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick("(")}
             >
               {"("}
             </button>
 
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "asin(" : "sin(")}
             >
               {inverse ? "asin" : "sin"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "³" : "²")}
             >
               {inverse ? "x³" : "x²"}
             </button>
 
             <button
-              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick("^")}
             >
               ^
             </button>
             <button
               key=")"
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(")")}
             >
               {")"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "atan(" : "tan(")}
             >
               {inverse ? "atan" : "tan"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block "
               onClick={() => handleButtonClick(inverse ? "tan⁻¹" : "1/")}
             >
               {inverse ? "tan⁻¹" : "1/X"}
@@ -638,76 +638,76 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
             </button>
 
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block "
               onClick={() => handleButtonClick(inverse ? "ln(" : "log(")}
             >
               {inverse ? "ln" : "log"}
             </button>
 
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block "
               onClick={() => handleButtonClick(inverse ? "e" : "π")}
             >
               {inverse ? "e" : "π"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "acos(" : "cos(")}
             >
               {inverse ? "acos" : "cos"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block "
               onClick={() => handleButtonClick(inverse ? "sin⁻¹(" : "cos⁻¹(")}
             >
               {inverse ? "sin⁻¹" : "cos⁻¹"}
             </button>
 
             <button
-              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick("|")}
             >
               |x|
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "∛(" : "√(")}
             >
               {inverse ? "∛" : "√"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20 text-sm sm:text-base  md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "acosh(" : "cosh(")}
             >
               {inverse ? "acosh" : "cosh"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "atanh(" : "tanh(")}
             >
               {inverse ? "atanh" : "tanh"}
             </button>
 
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick("!")}
             >
               x!
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900 p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "+" : "-")}
             >
               {inverse ? "+" : "-/+"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base  md:text-lg lg:text-xl hidden sm:block"
               onClick={() => handleButtonClick(inverse ? "asinh(" : "sinh(")}
             >
               {inverse ? "asinh" : "sinh"}
             </button>
             <button
-              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl"
+              className=" bg-violet-100	 text-violet-900  p-2 sm:p-4 rounded-full shadow-lg w-12 sm:w-16 md:w-20 h-12 sm:h-16 md:h-20  text-sm sm:text-base md:text-lg lg:text-xl hidden sm:block"
               onClick={toggleInverse}
             >
               inv
