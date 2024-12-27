@@ -7,15 +7,20 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 // import { useMediaQuery } from "@mui/material";
 
+//مشخص‌کننده اولویت و وابستگی عملگرها (چپ یا راست‌گرایی)
+//تعریف تایپ
 interface Operator {
   precedence: number;
   associativity: "L" | "R";
 }
 
+//برای دریافت حالت تاریک (darkMode) به عنوان پراپ.
 interface CalculatorProps {
   darkMode: boolean;
 }
+
 const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
+  //state managments
   const [input, setInput] = useState<string>("");
   const [history, setHistory] = useState<string[]>([]);
   const [inverse, setInverse] = useState<boolean>(false);
@@ -24,10 +29,12 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
   const [showAboutText, setShowAboutText] = useState<boolean>(false);
   const [showAdvancedButtons, setShowAdvancedButtons] = useState(false);
 
+  //استفاده از Ref برای مدیریت کلیک‌های بیرونی
   const historyRef = useRef<HTMLDivElement | null>(null);
   const aboutRef = useRef<HTMLDivElement | null>(null);
   const aboutRefText = useRef<HTMLDivElement | null>(null);
 
+  //ررسی می‌کند اگر کاربر خارج از ناحیه‌ای مشخص (مثل تاریخچه یا اطلاعات) کلیک کرد، آن ناحیه بسته شود.
   const handleClickOutside = (event: MouseEvent) => {
     if (
       historyRef.current &&
@@ -45,6 +52,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     }
     if (
       aboutRefText.current &&
+      //as nodeیه نوع گذاری در تایپ اسکریپت هست برای زمان کامپایل که اطمینان حاصل کنه از سازگاری نوع در زمان کامپایل
       !aboutRefText.current.contains(event.target as Node) &&
       showAboutText
     ) {
@@ -59,18 +67,21 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     };
   }, [showHistory, showAbout, showAboutText]);
 
+  //show about text
   const toggleAbout = () => {
     setShowAboutText(!showAboutText);
   };
 
+  //بروزرسانی مقدار ورودی (input) هنگام تایپ.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
+  //فزودن مقدار دکمه فشرده‌شده به input
   const handleButtonClick = (value: string) => {
     setInput((prev) => prev + value);
   };
-
+  //تعریف عملگرها ب همراه با اولویت و واابستگی
   const operators: Record<string, Operator> = {
     "+": { precedence: 1, associativity: "L" },
     "-": { precedence: 1, associativity: "L" },
@@ -111,6 +122,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     // EE: 0,
   };
 
+  //محاسبه قدر مطلق
   const processAbsoluteValue = (expression: string): string => {
     let result = expression;
     let startIndex = result.indexOf("|");
@@ -132,6 +144,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     return result;
   };
 
+  //جایگزینی نماد π با مقدار عددی آن
   const replacePi = (expression: string): string => {
     return expression.replace(/π/g, Math.PI.toString());
   };
@@ -140,6 +153,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     return expression.replace(/e/g, Math.E.toString());
   };
 
+  //تبدیل عبارت ورودی (infix) به پسوندی (postfix) برای ارزیابی آسان‌تر.
   const toPostfix = (infix: string): string[] => {
     const output: string[] = [];
     const stack: string[] = [];
@@ -188,6 +202,7 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     return output;
   };
 
+  //ارزیابی عبارت پسوندی و بازگرداندن نتیجه
   const evaluatePostfix = (postfix: string[]): number => {
     const stack: number[] = [];
     const applyOperator = (op: string) => {
@@ -285,11 +300,13 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     return stack[0];
   };
 
+  //فاکتوریل
   const factorial = (n: number): number => {
     if (n < 0) return NaN;
     return n <= 1 ? 1 : n * factorial(n - 1);
   };
 
+  //محاسبه نتیجه عبارت وارد شده و افزودن آن به تاریخچه
   const handleEvaluate = () => {
     try {
       const postfix = toPostfix(input);
@@ -305,26 +322,22 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     }
   };
 
+  //حذف کلی
   const handleClear = () => {
     setInput("");
   };
 
+  //حذف دونه ای
   const handleDelete = () => {
     setInput((prev) => prev.slice(0, -1));
   };
 
+  //حذف ایتم داخل تاریخچه
   const handleDeleteItem = (index: number) => {
     const newHistory = [...history];
     newHistory.splice(index, 1);
     setHistory(newHistory);
   };
-
-  // const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter" || e.key === "=") {
-  //     handleEvaluate();
-  //     e.preventDefault();
-  //   }
-  // };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === "=") {
@@ -339,9 +352,11 @@ const Calculator: React.FC<CalculatorProps> = ({ darkMode }) => {
     }
   };
 
+  //حذف کلی داخل تاریخچه
   const handleDeleteAll = () => {
     setHistory([]);
   };
+
   const toggleInverse = () => {
     setInverse((prev) => !prev);
   };
